@@ -47,7 +47,6 @@ public class math {
 	}
 	
 	private static int rimtodigit(String a){
-		int rim = 0;
 		
         switch(a)
         {
