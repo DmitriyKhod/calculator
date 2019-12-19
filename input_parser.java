@@ -1,56 +1,46 @@
 import java.util.regex.Pattern;
 
 public class input_parser {
-	   public static int rim_mode = 0;
-	   public static String operation = ""; 
-	   public static int rezult = 0;
-	   public static int operand1 =0;
-	   public static int operand2 =0;
-	
 	   public task parse_input(String input) {
+		   
+		   task intask = new task();
 		   
 	       String[] arrOfStr = input.split("[ ]+");
 	       switch(arrOfStr[1])
 	       {
 	          case "+" :
-	             operation = "+";
+	        	  intask.operation = "+";
 	             break;
 	          case "-" :
-	              operation = "-";
+	        	  intask.operation = "-";
 	             break;
 	          case "*" :
-	              operation = "*";
+	        	  intask.operation = "*";
 	              break;
 	          case "/" :
-	              operation = "/";
+	        	  intask.operation = "/";
 	              break;
 	          default :
 	              throw new ArithmeticException("Неверная операция");
 	       }
 	       
-	       rim_mode = checker(arrOfStr[0],arrOfStr[2]);
-	       
-		   task task = new task(rim_mode,operation,rezult ,operand1,operand2);
-	       return task;
-	   }
-	   
-	   private static int checker(String a,String b){
-		      
-	       if(Pattern.matches("\\d+", a)&&Pattern.matches("\\d+", b) ){
-	    	   operand1 = Integer.parseInt(a);
-	    	   operand2 = Integer.parseInt(b);
-	           if ((operand1 >0)&&(operand1 < 11)&&(operand2 >0)&&(operand2 < 11))
-	           return 0;
+	       if(Pattern.matches("\\d+", arrOfStr[0])&&Pattern.matches("\\d+", arrOfStr[2]) ){
+	    	   intask.operand1 = Integer.parseInt(arrOfStr[0]);
+	    	   intask.operand2 = Integer.parseInt(arrOfStr[2]);
+	           if ((intask.operand1 >0)&&(intask.operand1 < 11)&&(intask.operand2 >0)&&(intask.operand2 < 11))
+	        	   intask.rim_mode =0;
 	           else {throw new ArithmeticException("Неверная операция");}
 	       }
+	       else {
+	    	   intask.operand1 = rimtodigit(arrOfStr[0]) ;
+	    	   intask.operand2 = rimtodigit(arrOfStr[2]) ;
+	    	   intask.rim_mode = 1;
+	       }
 	       
-	       operand1 = rimtodigit(a) ;
-	       operand2 = rimtodigit(b) ;
-	       return 1;
+	       return intask;
 	   }
 	   
 	   private static int rimtodigit(String a){
-
 	       switch(a)
 	       {
 	          case "I" : return 1; 
@@ -68,3 +58,4 @@ public class input_parser {
 	       throw new ArithmeticException("Неверная операция");
 	   }
 }
+
