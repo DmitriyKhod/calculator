@@ -1,46 +1,29 @@
-package calc;
 import java.util.Scanner;
- 
+
 public class calc {
  
     public static void main(String[] args) {
- 
             Scanner scanner = new Scanner(System.in);
+            
+            task task = new task();
             math math = new math();
- 
+            printer printer = new printer();
+            input_parser input_parser = new input_parser();
+
             while (true) {
- 
-                System.out.print("Enter something : ");
+                System.out.print("Enter task ('q' for exit) : ");
                 String input = scanner.nextLine();
  
                 if ("q".equals(input)) {
                     System.out.println("Exit!");
                     break;
                 }
- 
-                System.out.println("input : " + input);
-                System.out.println("-----------\n");
-                String[] arrOfStr = input.split("[ ]+");
                 
-                switch(arrOfStr[1])
-                {
-                   case "+" :
-                      System.out.println(math.Add(arrOfStr[0], arrOfStr[2])); 
-                      break;
-                   case "-" :
-                      System.out.println(math.Subtract(arrOfStr[0], arrOfStr[2])); 
-                      break;
-                   case "*" :
-                       System.out.println(math.Multiply(arrOfStr[0], arrOfStr[2])); 
-                       break;
-                   case "/" :
-                       System.out.println(math.Divide(arrOfStr[0], arrOfStr[2])); 
-                       break;
-                   default :
-                	   throw new ArithmeticException("Неверная операция");
-                }
+               task = input_parser.parse_input(input);
+               task = math.docalculation1(task);
+               printer.print(task);
+
             }
             scanner.close();
     }
 }
-
