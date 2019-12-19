@@ -32,30 +32,58 @@ public class input_parser {
 	           else {throw new ArithmeticException("Неверная операция");}
 	       }
 	       else {
-	    	   intask.operand1 = rimtodigit(arrOfStr[0]) ;
-	    	   intask.operand2 = rimtodigit(arrOfStr[2]) ;
+	    	   intask.operand1 = RomanToDecimal(arrOfStr[0]) ;
+	    	   intask.operand2 = RomanToDecimal(arrOfStr[2]) ;
 	    	   intask.rim_mode = 1;
 	       }
 	       
 	       return intask;
 	   }
 	   
-	   private static int rimtodigit(String a){
-	       switch(a)
-	       {
-	          case "I" : return 1; 
-	          case "II" : return 2; 
-	          case "III" : return 3;
-	          case "IV" : return 4; 
-	          case "V" : return 5; 
-	          case "VI" : return 6; 
-	          case "VII" : return 7; 
-	          case "VIII" : return 8; 
-	          case "IX" : return 9; 
-	          case "X" : return 10; 
-	       }
-	       
-	       throw new ArithmeticException("Неверная операция");
-	   }
-}
+	   private static int RomanToDecimal(String romanNumber) {
+	        int decimal = 0;
+	        int lastNumber = 0;
+	        String romanNumeral = romanNumber.toUpperCase();
 
+	        for (int x = romanNumeral.length() - 1; x >= 0 ; x--) {
+	            char convertToDecimal = romanNumeral.charAt(x);
+
+	            switch (convertToDecimal) {
+
+	                case 'C':
+	                    decimal = processDecimal(100, lastNumber, decimal);
+	                    lastNumber = 100;
+	                    break;
+
+	                case 'L':
+	                    decimal = processDecimal(50, lastNumber, decimal);
+	                    lastNumber = 50;
+	                    break;
+
+	                case 'X':
+	                    decimal = processDecimal(10, lastNumber, decimal);
+	                    lastNumber = 10;
+	                    break;
+
+	                case 'V':
+	                    decimal = processDecimal(5, lastNumber, decimal);
+	                    lastNumber = 5;
+	                    break;
+
+	                case 'I':
+	                    decimal = processDecimal(1, lastNumber, decimal);
+	                    lastNumber = 1;
+	                    break;
+	            }
+	        }
+	        return decimal;
+	    }
+
+	    private static int processDecimal(int decimal, int lastNumber, int lastDecimal) {
+	        if (lastNumber > decimal) {
+	            return lastDecimal - decimal;
+	        } else {
+	            return lastDecimal + decimal;
+	        }
+	    } 
+}
